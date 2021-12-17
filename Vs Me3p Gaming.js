@@ -11243,18 +11243,6 @@ Controls.prototype = $extend(flixel_input_actions_FlxActionSet.prototype,{
 			}
 			break;
 		}
-		var s = flixel_FlxG.save.data.muteBind;
-		s = s.toUpperCase();
-		var tmp = Object.prototype.hasOwnProperty.call(flixel_input_keyboard_FlxKey.fromStringMap.h,s) ? flixel_input_keyboard_FlxKey.fromStringMap.h[s] : -1;
-		flixel_FlxG.sound.muteKeys = [tmp];
-		var s = flixel_FlxG.save.data.volDownBind;
-		s = s.toUpperCase();
-		var tmp = Object.prototype.hasOwnProperty.call(flixel_input_keyboard_FlxKey.fromStringMap.h,s) ? flixel_input_keyboard_FlxKey.fromStringMap.h[s] : -1;
-		flixel_FlxG.sound.volumeDownKeys = [tmp];
-		var s = flixel_FlxG.save.data.volUpBind;
-		s = s.toUpperCase();
-		var tmp = Object.prototype.hasOwnProperty.call(flixel_input_keyboard_FlxKey.fromStringMap.h,s) ? flixel_input_keyboard_FlxKey.fromStringMap.h[s] : -1;
-		flixel_FlxG.sound.volumeUpKeys = [tmp];
 	}
 	,removeKeyboard: function() {
 		var _g = 0;
@@ -16621,15 +16609,6 @@ KeyBinds.keyCheck = function() {
 	if(flixel_FlxG.save.data.gpresetBind == null) {
 		flixel_FlxG.save.data.gpresetBind = "SELECT";
 	}
-	if(flixel_FlxG.save.data.muteBind == null) {
-		flixel_FlxG.save.data.muteBind = "ZERO";
-	}
-	if(flixel_FlxG.save.data.volumeUpKeys == null) {
-		flixel_FlxG.save.data.volumeUpKeys = ["PLUS"];
-	}
-	if(flixel_FlxG.save.data.volumeDownKeys == null) {
-		flixel_FlxG.save.data.volumeDownKeys = ["MINUS"];
-	}
 	if(flixel_FlxG.save.data.fullscreenBind == null) {
 		flixel_FlxG.save.data.fullscreenBind = "F";
 	}
@@ -18284,81 +18263,6 @@ ResetBind.prototype = $extend(Option.prototype,{
 	}
 	,__class__: ResetBind
 });
-var MuteBind = function(desc) {
-	Option.call(this);
-	this.description = desc;
-	this.acceptType = true;
-};
-$hxClasses["MuteBind"] = MuteBind;
-MuteBind.__name__ = "MuteBind";
-MuteBind.__super__ = Option;
-MuteBind.prototype = $extend(Option.prototype,{
-	onType: function(text) {
-		if(this.waitingType) {
-			flixel_FlxG.save.data.muteBind = text;
-			this.waitingType = false;
-		}
-	}
-	,press: function() {
-		Debug.logTrace("keybind change",{ fileName : "source/Options.hx", lineNumber : 305, className : "MuteBind", methodName : "press"});
-		this.waitingType = !this.waitingType;
-		return true;
-	}
-	,updateDisplay: function() {
-		return "VOLUME MUTE: " + (this.waitingType ? "> " + Std.string(flixel_FlxG.save.data.muteBind) + " <" : flixel_FlxG.save.data.muteBind) + "";
-	}
-	,__class__: MuteBind
-});
-var VolUpBind = function(desc) {
-	Option.call(this);
-	this.description = desc;
-	this.acceptType = true;
-};
-$hxClasses["VolUpBind"] = VolUpBind;
-VolUpBind.__name__ = "VolUpBind";
-VolUpBind.__super__ = Option;
-VolUpBind.prototype = $extend(Option.prototype,{
-	onType: function(text) {
-		if(this.waitingType) {
-			flixel_FlxG.save.data.volUpBind = text;
-			this.waitingType = false;
-		}
-	}
-	,press: function() {
-		Debug.logTrace("keybind change",{ fileName : "source/Options.hx", lineNumber : 337, className : "VolUpBind", methodName : "press"});
-		this.waitingType = !this.waitingType;
-		return true;
-	}
-	,updateDisplay: function() {
-		return "VOLUME UP: " + (this.waitingType ? "> " + Std.string(flixel_FlxG.save.data.volUpBind) + " <" : flixel_FlxG.save.data.volUpBind) + "";
-	}
-	,__class__: VolUpBind
-});
-var VolDownBind = function(desc) {
-	Option.call(this);
-	this.description = desc;
-	this.acceptType = true;
-};
-$hxClasses["VolDownBind"] = VolDownBind;
-VolDownBind.__name__ = "VolDownBind";
-VolDownBind.__super__ = Option;
-VolDownBind.prototype = $extend(Option.prototype,{
-	onType: function(text) {
-		if(this.waitingType) {
-			flixel_FlxG.save.data.volDownBind = text;
-			this.waitingType = false;
-		}
-	}
-	,press: function() {
-		Debug.logTrace("keybind change",{ fileName : "source/Options.hx", lineNumber : 369, className : "VolDownBind", methodName : "press"});
-		this.waitingType = !this.waitingType;
-		return true;
-	}
-	,updateDisplay: function() {
-		return "VOLUME DOWN: " + (this.waitingType ? "> " + Std.string(flixel_FlxG.save.data.volDownBind) + " <" : flixel_FlxG.save.data.volDownBind) + "";
-	}
-	,__class__: VolDownBind
-});
 var FullscreenBind = function(desc) {
 	Option.call(this);
 	this.description = desc;
@@ -18375,7 +18279,7 @@ FullscreenBind.prototype = $extend(Option.prototype,{
 		}
 	}
 	,press: function() {
-		Debug.logTrace("keybind change",{ fileName : "source/Options.hx", lineNumber : 401, className : "FullscreenBind", methodName : "press"});
+		Debug.logTrace("keybind change",{ fileName : "source/Options.hx", lineNumber : 305, className : "FullscreenBind", methodName : "press"});
 		this.waitingType = !this.waitingType;
 		return true;
 	}
@@ -19627,7 +19531,7 @@ OptionsMenu.__name__ = "OptionsMenu";
 OptionsMenu.__super__ = flixel_FlxSubState;
 OptionsMenu.prototype = $extend(flixel_FlxSubState.prototype,{
 	create: function() {
-		this.options = [new OptionCata(50,40,"Gameplay",[new ScrollSpeedOption("Change your scroll speed. (1 = Chart dependent)"),new OffsetThing("Change the note audio offset (how many milliseconds a note is offset in a chart)"),new AccuracyDOption("Change how accuracy is calculated. (Accurate = Simple, Complex = Milisecond Based)"),new GhostTapOption("Toggle counting pressing a directional input when no arrow is there as a miss."),new DownscrollOption("Toggle making the notes scroll down rather than up."),new BotPlay("A bot plays for you!"),new ResetButtonOption("Toggle pressing R to gameover."),new InstantRespawn("Toggle if you instantly respawn after dying."),new CamZoomOption("Toggle the camera zoom in-game."),new DFJKOption(),new Judgement("Create a custom judgement preset"),new CustomizeGameplay("Drag and drop gameplay modules to your prefered positions!")]),new OptionCata(345,40,"Appearance",[new NoteskinOption("Change your current noteskin"),new EditorRes("Not showing the editor grid will greatly increase editor performance"),new DistractionsAndEffectsOption("Toggle stage distractions that can hinder your gameplay."),new MiddleScrollOption("Put your lane in the center or on the right."),new HealthBarOption("Toggles health bar visibility"),new JudgementCounter("Show your judgements that you've gotten in the song"),new LaneUnderlayOption("How transparent your lane is, higher = more visible."),new StepManiaOption("Sets the colors of the arrows depending on quantization instead of direction."),new AccuracyOption("Display accuracy information on the info bar."),new SongPositionOption("Show the song's current position as a scrolling bar."),new Colour("The color behind icons now fit with their theme. (e.g. Pico = green)"),new NPSDisplayOption("Shows your current Notes Per Second on the info bar."),new RainbowFPSOption("Make the FPS Counter flicker through rainbow colors."),new CpuStrums("Toggle the CPU's strumline lighting up when it hits a note.")]),new OptionCata(640,40,"Misc",[new FPSOption("Toggle the FPS Counter"),new FlashingLightsOption("Toggle flashing lights that can cause epileptic seizures and strain."),new WatermarkOption("Enable and disable all watermarks from the engine."),new AntialiasingOption("Toggle antialiasing, improving graphics quality at a slight performance penalty."),new MissSoundsOption("Toggle miss sounds playing when you don't hit a note."),new ScoreScreen("Show the score screen after the end of a song"),new ShowInput("Display every single input on the score screen.")]),new OptionCata(935,40,"Saves",[new ResetScoreOption("Reset your score on all songs and weeks. This is irreversible!"),new LockWeeksOption("Reset your story mode progress. This is irreversible!"),new ResetSettings("Reset ALL your settings. This is irreversible!")]),new OptionCata(-1,125,"Editing Keybinds",[new LeftKeybind("The left note's keybind"),new DownKeybind("The down note's keybind"),new UpKeybind("The up note's keybind"),new RightKeybind("The right note's keybind"),new PauseKeybind("The keybind used to pause the game"),new ResetBind("The keybind used to die instantly"),new MuteBind("The keybind used to mute game audio"),new VolUpBind("The keybind used to turn the volume up"),new VolDownBind("The keybind used to turn the volume down"),new FullscreenBind("The keybind used to fullscreen the game")],true),new OptionCata(-1,125,"Editing Judgements",[new SickMSOption("How many milliseconds are in the SICK hit window"),new GoodMsOption("How many milliseconds are in the GOOD hit window"),new BadMsOption("How many milliseconds are in the BAD hit window"),new ShitMsOption("How many milliseconds are in the SHIT hit window")],true)];
+		this.options = [new OptionCata(50,40,"Gameplay",[new ScrollSpeedOption("Change your scroll speed. (1 = Chart dependent)"),new OffsetThing("Change the note audio offset (how many milliseconds a note is offset in a chart)"),new AccuracyDOption("Change how accuracy is calculated. (Accurate = Simple, Complex = Milisecond Based)"),new GhostTapOption("Toggle counting pressing a directional input when no arrow is there as a miss."),new DownscrollOption("Toggle making the notes scroll down rather than up."),new BotPlay("A bot plays for you!"),new ResetButtonOption("Toggle pressing R to gameover."),new InstantRespawn("Toggle if you instantly respawn after dying."),new CamZoomOption("Toggle the camera zoom in-game."),new DFJKOption(),new Judgement("Create a custom judgement preset"),new CustomizeGameplay("Drag and drop gameplay modules to your prefered positions!")]),new OptionCata(345,40,"Appearance",[new NoteskinOption("Change your current noteskin"),new EditorRes("Not showing the editor grid will greatly increase editor performance"),new DistractionsAndEffectsOption("Toggle stage distractions that can hinder your gameplay."),new MiddleScrollOption("Put your lane in the center or on the right."),new HealthBarOption("Toggles health bar visibility"),new JudgementCounter("Show your judgements that you've gotten in the song"),new LaneUnderlayOption("How transparent your lane is, higher = more visible."),new StepManiaOption("Sets the colors of the arrows depending on quantization instead of direction."),new AccuracyOption("Display accuracy information on the info bar."),new SongPositionOption("Show the song's current position as a scrolling bar."),new Colour("The color behind icons now fit with their theme. (e.g. Pico = green)"),new NPSDisplayOption("Shows your current Notes Per Second on the info bar."),new RainbowFPSOption("Make the FPS Counter flicker through rainbow colors."),new CpuStrums("Toggle the CPU's strumline lighting up when it hits a note.")]),new OptionCata(640,40,"Misc",[new FPSOption("Toggle the FPS Counter"),new FlashingLightsOption("Toggle flashing lights that can cause epileptic seizures and strain."),new WatermarkOption("Enable and disable all watermarks from the engine."),new AntialiasingOption("Toggle antialiasing, improving graphics quality at a slight performance penalty."),new MissSoundsOption("Toggle miss sounds playing when you don't hit a note."),new ScoreScreen("Show the score screen after the end of a song"),new ShowInput("Display every single input on the score screen.")]),new OptionCata(935,40,"Saves",[new ResetScoreOption("Reset your score on all songs and weeks. This is irreversible!"),new LockWeeksOption("Reset your story mode progress. This is irreversible!"),new ResetSettings("Reset ALL your settings. This is irreversible!")]),new OptionCata(-1,125,"Editing Keybinds",[new LeftKeybind("The left note's keybind"),new DownKeybind("The down note's keybind"),new UpKeybind("The up note's keybind"),new RightKeybind("The right note's keybind"),new PauseKeybind("The keybind used to pause the game"),new ResetBind("The keybind used to die instantly"),new FullscreenBind("The keybind used to fullscreen the game")],true),new OptionCata(-1,125,"Editing Judgements",[new SickMSOption("How many milliseconds are in the SICK hit window"),new GoodMsOption("How many milliseconds are in the GOOD hit window"),new BadMsOption("How many milliseconds are in the BAD hit window"),new ShitMsOption("How many milliseconds are in the SHIT hit window")],true)];
 		OptionsMenu.instance = this;
 		this.menu = new flixel_group_FlxTypedGroup();
 		this.shownStuff = new flixel_group_FlxTypedGroup();
@@ -19744,13 +19648,13 @@ OptionsMenu.prototype = $extend(flixel_FlxSubState.prototype,{
 			var e = haxe_Exception.caught(_g);
 			var input = "oops\n" + Std.string(e);
 			if(input != null) {
-				var output = Debug.formatOutput(input,{ fileName : "source/OptionsMenu.hx", lineNumber : 315, className : "OptionsMenu", methodName : "switchCat"});
+				var output = Debug.formatOutput(input,{ fileName : "source/OptionsMenu.hx", lineNumber : 314, className : "OptionsMenu", methodName : "switchCat"});
 				Debug.writeToFlxGLog(output,Debug.LOG_STYLE_ERROR);
 				Debug.writeToLogFile(output,"ERROR");
 			}
 			this.selectedCatIndex = 0;
 		}
-		Debug.logTrace("Changed cat: " + this.selectedCatIndex,{ fileName : "source/OptionsMenu.hx", lineNumber : 319, className : "OptionsMenu", methodName : "switchCat"});
+		Debug.logTrace("Changed cat: " + this.selectedCatIndex,{ fileName : "source/OptionsMenu.hx", lineNumber : 318, className : "OptionsMenu", methodName : "switchCat"});
 	}
 	,selectOption: function(option) {
 		var object = this.selectedCat.optionObjects.members[this.selectedOptionIndex];
@@ -19759,8 +19663,8 @@ OptionsMenu.prototype = $extend(flixel_FlxSubState.prototype,{
 			object.set_text("> " + option.getValue());
 			this.descText.set_text(option.getDescription());
 		}
-		Debug.logTrace("Changed opt: " + this.selectedOptionIndex,{ fileName : "source/OptionsMenu.hx", lineNumber : 334, className : "OptionsMenu", methodName : "selectOption"});
-		Debug.logTrace("Bounds: " + OptionsMenu.visibleRange[0] + "," + OptionsMenu.visibleRange[1],{ fileName : "source/OptionsMenu.hx", lineNumber : 336, className : "OptionsMenu", methodName : "selectOption"});
+		Debug.logTrace("Changed opt: " + this.selectedOptionIndex,{ fileName : "source/OptionsMenu.hx", lineNumber : 333, className : "OptionsMenu", methodName : "selectOption"});
+		Debug.logTrace("Bounds: " + OptionsMenu.visibleRange[0] + "," + OptionsMenu.visibleRange[1],{ fileName : "source/OptionsMenu.hx", lineNumber : 335, className : "OptionsMenu", methodName : "selectOption"});
 	}
 	,update: function(elapsed) {
 		flixel_FlxSubState.prototype.update.call(this,elapsed);
@@ -19995,7 +19899,7 @@ OptionsMenu.prototype = $extend(flixel_FlxSubState.prototype,{
 							this.selectedOption.waitingType = false;
 							var object = this.selectedCat.optionObjects.members[this.selectedOptionIndex];
 							object.set_text("> " + this.selectedOption.getValue());
-							Debug.logTrace("New text: " + object.text,{ fileName : "source/OptionsMenu.hx", lineNumber : 449, className : "OptionsMenu", methodName : "update"});
+							Debug.logTrace("New text: " + object.text,{ fileName : "source/OptionsMenu.hx", lineNumber : 448, className : "OptionsMenu", methodName : "update"});
 							return;
 						} else if(any) {
 							var object = this.selectedCat.optionObjects.members[this.selectedOptionIndex];
@@ -20010,7 +19914,7 @@ OptionsMenu.prototype = $extend(flixel_FlxSubState.prototype,{
 							}
 							tmp.onType(tmp1);
 							object.set_text("> " + this.selectedOption.getValue());
-							Debug.logTrace("New text: " + object.text,{ fileName : "source/OptionsMenu.hx", lineNumber : 457, className : "OptionsMenu", methodName : "update"});
+							Debug.logTrace("New text: " + object.text,{ fileName : "source/OptionsMenu.hx", lineNumber : 456, className : "OptionsMenu", methodName : "update"});
 						}
 					}
 				}
@@ -20103,14 +20007,14 @@ OptionsMenu.prototype = $extend(flixel_FlxSubState.prototype,{
 						this.selectedOption.right();
 						flixel_FlxG.save.flush();
 						object.set_text("> " + this.selectedOption.getValue());
-						Debug.logTrace("New text: " + object.text,{ fileName : "source/OptionsMenu.hx", lineNumber : 560, className : "OptionsMenu", methodName : "update"});
+						Debug.logTrace("New text: " + object.text,{ fileName : "source/OptionsMenu.hx", lineNumber : 559, className : "OptionsMenu", methodName : "update"});
 					} else if(left) {
 						flixel_FlxG.sound.play(Paths.sound("scrollMenu"));
 						var object = this.selectedCat.optionObjects.members[this.selectedOptionIndex];
 						this.selectedOption.left();
 						flixel_FlxG.save.flush();
 						object.set_text("> " + this.selectedOption.getValue());
-						Debug.logTrace("New text: " + object.text,{ fileName : "source/OptionsMenu.hx", lineNumber : 571, className : "OptionsMenu", methodName : "update"});
+						Debug.logTrace("New text: " + object.text,{ fileName : "source/OptionsMenu.hx", lineNumber : 570, className : "OptionsMenu", methodName : "update"});
 					}
 					if($escape) {
 						flixel_FlxG.sound.play(Paths.sound("scrollMenu"));
@@ -20155,7 +20059,7 @@ OptionsMenu.prototype = $extend(flixel_FlxSubState.prototype,{
 			var e = haxe_Exception.caught(_g);
 			var input = "wtf we actually did something wrong, but we dont crash bois.\n" + Std.string(e);
 			if(input != null) {
-				var output = Debug.formatOutput(input,{ fileName : "source/OptionsMenu.hx", lineNumber : 620, className : "OptionsMenu", methodName : "update"});
+				var output = Debug.formatOutput(input,{ fileName : "source/OptionsMenu.hx", lineNumber : 619, className : "OptionsMenu", methodName : "update"});
 				Debug.writeToFlxGLog(output,Debug.LOG_STYLE_ERROR);
 				Debug.writeToLogFile(output,"ERROR");
 			}
@@ -26191,18 +26095,6 @@ TitleState.prototype = $extend(MusicBeatState.prototype,{
 		PlayerSettings.init();
 		KadeEngineData.initSave();
 		NoteskinHelpers.updateNoteskins();
-		var s = flixel_FlxG.save.data.muteBind;
-		s = s.toUpperCase();
-		var tmp = Object.prototype.hasOwnProperty.call(flixel_input_keyboard_FlxKey.fromStringMap.h,s) ? flixel_input_keyboard_FlxKey.fromStringMap.h[s] : -1;
-		flixel_FlxG.sound.muteKeys = [tmp];
-		var s = flixel_FlxG.save.data.volDownBind;
-		s = s.toUpperCase();
-		var tmp = Object.prototype.hasOwnProperty.call(flixel_input_keyboard_FlxKey.fromStringMap.h,s) ? flixel_input_keyboard_FlxKey.fromStringMap.h[s] : -1;
-		flixel_FlxG.sound.volumeDownKeys = [tmp];
-		var s = flixel_FlxG.save.data.volUpBind;
-		s = s.toUpperCase();
-		var tmp = Object.prototype.hasOwnProperty.call(flixel_input_keyboard_FlxKey.fromStringMap.h,s) ? flixel_input_keyboard_FlxKey.fromStringMap.h[s] : -1;
-		flixel_FlxG.sound.volumeUpKeys = [tmp];
 		flixel_FlxG.mouse.set_visible(false);
 		var _this = flixel_FlxG.worldBounds;
 		var X = 0;
@@ -26476,7 +26368,7 @@ TitleState.prototype = $extend(MusicBeatState.prototype,{
 		if(!this.skippedIntro) {
 			var input = "Skipping intro...";
 			if(input != null) {
-				var output = Debug.formatOutput(input,{ fileName : "source/TitleState.hx", lineNumber : 439, className : "TitleState", methodName : "skipIntro"});
+				var output = Debug.formatOutput(input,{ fileName : "source/TitleState.hx", lineNumber : 436, className : "TitleState", methodName : "skipIntro"});
 				Debug.writeToFlxGLog(output,Debug.LOG_STYLE_INFO);
 				Debug.writeToLogFile(output,"INFO");
 			}
@@ -71789,7 +71681,7 @@ var lime_utils_AssetCache = function() {
 	this.audio = new haxe_ds_StringMap();
 	this.font = new haxe_ds_StringMap();
 	this.image = new haxe_ds_StringMap();
-	this.version = 268012;
+	this.version = 819562;
 };
 $hxClasses["lime.utils.AssetCache"] = lime_utils_AssetCache;
 lime_utils_AssetCache.__name__ = "lime.utils.AssetCache";
